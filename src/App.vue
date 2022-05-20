@@ -1,115 +1,249 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "@/components/HelloWorld.vue";
-</script>
-
 <template>
-  <header style="display: none">
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-  <RouterView />
+  <n-config-provider :theme="theme" :theme-overrides="themeOverrides">
+    <n-theme-editor>
+      <n-space vertical>
+        <n-layout>
+          <n-layout-header bordered style="height: 50px">
+            <div :class="$style.logo">
+              <img src="@/assets/logo.png" />
+            </div>
+          </n-layout-header>
+          <n-layout has-sider>
+            <n-layout-sider
+              bordered
+              show-trigger
+              collapse-mode="width"
+              :collapsed-width="64"
+              :width="240"
+              :native-scrollbar="false"
+              style="height: calc(100vh - 100px)"
+            >
+              <n-menu
+                :collapsed-width="64"
+                :collapsed-icon-size="22"
+                :options="menuOptions"
+              />
+            </n-layout-sider>
+            <n-layout>
+              <div :class="$style.content">
+                <n-breadcrumb>
+                  <n-breadcrumb-item href="#">Home</n-breadcrumb-item>
+                  <n-breadcrumb-item href="#">Home</n-breadcrumb-item>
+                </n-breadcrumb>
+                <router-view />
+              </div>
+            </n-layout>
+          </n-layout>
+          <n-layout-footer bordered :class="$style.footer">
+            Copyright © 2021-2023 ibuilding.com.my. All Rights Reserved.
+          </n-layout-footer>
+        </n-layout>
+      </n-space>
+    </n-theme-editor>
+  </n-config-provider>
 </template>
 
+<script setup lang="ts">
+import { computed, h, Component } from "vue";
+import { RouterView } from "vue-router";
+import {
+  useOsTheme,
+  lightTheme,
+  darkTheme,
+  NThemeEditor,
+  NIcon,
+} from "naive-ui";
+import { darkThemeOverrides } from "@/constants/dark-theme-overrides";
+import { lightThemeOverrides } from "@/constants/light-theme-overrides";
+import {
+  CallOutline as CallIcon,
+  BusinessOutline as BusinessIcon,
+  AppsOutline as AppsIcon,
+  PeopleOutline as PeopleIcon,
+  StatsChartOutline as StatsChartIcon,
+  SettingsOutline as SettingsIcon,
+} from "@vicons/ionicons5";
+
+const osThemeRef = useOsTheme();
+const theme = computed(() =>
+  osThemeRef.value === "dark" ? darkTheme : lightTheme
+);
+const themeOverrides = computed(() =>
+  osThemeRef.value === "dark" ? darkThemeOverrides : lightThemeOverrides
+);
+const renderIcon = (icon: Component) => {
+  return () => h(NIcon, null, { default: () => h(icon) });
+};
+
+const menuOptions = [
+  {
+    label: "Team Overview",
+    key: "team-overview",
+    icon: renderIcon(CallIcon),
+  },
+  {
+    key: "divider-1",
+    type: "divider",
+    props: {
+      style: {
+        marginLeft: "0",
+        marginRight: "0",
+      },
+    },
+  },
+  {
+    label: "Tenant Overview",
+    key: "tenant-overview",
+    icon: renderIcon(BusinessIcon),
+  },
+  {
+    key: "divider-1",
+    type: "divider",
+    props: {
+      style: {
+        marginLeft: "0",
+        marginRight: "0",
+      },
+    },
+  },
+  {
+    label: "Main Overview",
+    key: "main-overview",
+    icon: renderIcon(AppsIcon),
+    children: [
+      {
+        label: "Dashboard (Admin)",
+        key: "dashboard",
+      },
+      {
+        label: "Building Community Directory",
+        key: "building-community-directory",
+      },
+      {
+        label: "Tasks Management",
+        key: "tasks-management",
+      },
+      {
+        label: "Complaints Management",
+        key: "complaints-management",
+      },
+      {
+        label: "Facility Management",
+        key: "facility-management",
+      },
+      {
+        label: "Asset Management",
+        key: "asset-management",
+      },
+      {
+        label: "Visitors Management",
+        key: "visitors-management",
+      },
+      {
+        label: "Campaigns Management",
+        key: "campaigns-management",
+      },
+      {
+        label: "Parcel Tracking Management",
+        key: "parcel-tracking-management",
+      },
+      {
+        label: "Advance User Alert Management",
+        key: "advance-user-alert-management",
+      },
+      {
+        label: "Document Management",
+        key: "document-management",
+      },
+      {
+        label: "FAQ Management",
+        key: "faq-management",
+      },
+    ],
+  },
+  {
+    key: "divider-1",
+    type: "divider",
+    props: {
+      style: {
+        marginLeft: "0",
+        marginRight: "0",
+      },
+    },
+  },
+  {
+    label: "User List Overview",
+    key: "user-list-overview",
+    icon: renderIcon(PeopleIcon),
+    children: [
+      {
+        label: "Commerical Owner List",
+        key: "commerical-owner-list",
+      },
+      {
+        label: "Residential Owner List",
+        key: "residential-owner-list",
+      },
+      {
+        label: "Management Office List",
+        key: "management-office-list",
+      },
+    ],
+  },
+  {
+    key: "divider-1",
+    type: "divider",
+    props: {
+      style: {
+        marginLeft: "0",
+        marginRight: "0",
+      },
+    },
+  },
+  {
+    label: "Data Tracker Overview",
+    key: "data-tracker-overview",
+    icon: renderIcon(StatsChartIcon),
+    children: [
+      {
+        label: "Visitor/Guest/Contractor",
+        key: "visitor-guest-contractor",
+      },
+      {
+        label: "Parcel",
+        key: "parcel",
+      },
+    ],
+  },
+  {
+    key: "divider-1",
+    type: "divider",
+    props: {
+      style: {
+        marginLeft: "0",
+        marginRight: "0",
+      },
+    },
+  },
+  {
+    label: "System",
+    key: "system",
+    icon: renderIcon(SettingsIcon),
+    children: [
+      {
+        label: "System Settings",
+        key: "system-settings",
+      },
+      {
+        label: "System Logs",
+        key: "system-logs",
+      },
+    ],
+  },
+];
+</script>
+
 <style>
-@import "@/assets/base.css";
-
-/* #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
-} */
-
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  /* body {
-    display: flex;
-    place-items: center;
-  } */
-
-  /* #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  } */
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
+@import "@/assets/css/base.css";
 </style>
+<style lang="scss" module src="@/assets/css/layout.scss"></style>

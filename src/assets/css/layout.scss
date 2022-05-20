@@ -1,0 +1,20 @@
+.logo {
+  width: 100px;
+  padding: 12px;
+  img {
+    height: 24px;
+    display: none;
+  }
+}
+
+.footer {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.content {
+  padding: 20px;
+}
