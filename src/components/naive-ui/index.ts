@@ -2,6 +2,7 @@ import {
   create,
   NThemeEditor,
   darkTheme,
+  lightTheme,
   NConfigProvider,
   NSpace,
   NLayout,
@@ -12,6 +13,7 @@ import {
   NMenu,
   NBreadcrumb,
   NBreadcrumbItem,
+  NResult,
   NIcon,
   NInput,
   NButton,
@@ -24,6 +26,7 @@ export default create({
   components: [
     NThemeEditor,
     darkTheme,
+    lightTheme,
     NConfigProvider,
     NSpace,
     NLayout,
@@ -34,6 +37,7 @@ export default create({
     NMenu,
     NBreadcrumb,
     NBreadcrumbItem,
+    NResult,
     NIcon,
     NInput,
     NButton,
@@ -47,6 +51,7 @@ declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     NThemeEditor: typeof NThemeEditor;
     darkTheme: typeof darkTheme;
+    lightTheme: typeof lightTheme;
     NConfigProvider: typeof NConfigProvider;
     NSpace: typeof NSpace;
     NLayout: typeof NLayout;
@@ -57,6 +62,7 @@ declare module "@vue/runtime-core" {
     NMenu: typeof NMenu;
     NBreadcrumb: typeof NBreadcrumb;
     NBreadcrumbItem: typeof NBreadcrumbItem;
+    NResult: typeof NResult;
     NIcon: typeof NIcon;
     NInput: typeof NInput;
     NButton: typeof NButton;

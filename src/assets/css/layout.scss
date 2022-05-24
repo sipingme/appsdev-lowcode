@@ -1,9 +1,9 @@
 .logo {
   width: 100px;
   padding: 12px;
+
   img {
     height: 24px;
-    display: none;
   }
 }
 
@@ -12,9 +12,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  display: none;
 }
 
 .content {
   padding: 20px;
+  text-transform: capitalize;
+  
+  .breadcrumb {
+    margin-bottom: 20px;
+  }
 }

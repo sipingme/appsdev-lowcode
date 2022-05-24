@@ -1,23 +1,39 @@
-import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import { createRouter, createWebHistory, type RouteLocationNormalized } from "vue-router";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "home",
-      component: HomeView,
+      redirect: "/dashboard",
     },
     {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("@/components/Layout/Layout.vue"),
+      path: "/dashboard",
+      name: "dashboard",
+      component: () => import("@/components/DashBoard/DashBoard.vue"),
+    },
+    {
+      path: "/dashboard/:path",
+      component: () => import("@/components/DashBoard/DashBoard.vue"),
+    },
+    {
+      path: "/dashboard/:path/list",
+      name: "list",
+      component: () => import("@/components/List/List.vue"),
+    },
+    {
+      path: "/404",
+      name: "404",
+      component: () => import("@/components/NotFound/NotFound.vue"),
     },
   ],
+});
+
+router.beforeEach((to: RouteLocationNormalized, _from, next) => {
+  to.params.path === undefined && to.name === undefined
+    ? router.push("/404")
+    : "";
+  next();
 });
 
 export default router;

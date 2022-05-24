@@ -26,9 +26,13 @@
             </n-layout-sider>
             <n-layout>
               <div :class="$style.content">
-                <n-breadcrumb>
-                  <n-breadcrumb-item href="#">Home</n-breadcrumb-item>
-                  <n-breadcrumb-item href="#">Home</n-breadcrumb-item>
+                <n-breadcrumb :class="$style.breadcrumb">
+                  <n-breadcrumb-item
+                    v-for="(value, key) in breadcrumb"
+                    :key="key"
+                  >
+                    {{ value }}
+                  </n-breadcrumb-item>
                 </n-breadcrumb>
                 <router-view />
               </div>
@@ -44,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, h, Component } from "vue";
+import { computed, h, ref, type Component } from "vue";
 import { RouterView } from "vue-router";
 import {
   useOsTheme,
@@ -74,6 +78,8 @@ const themeOverrides = computed(() =>
 const renderIcon = (icon: Component) => {
   return () => h(NIcon, null, { default: () => h(icon) });
 };
+const breadcrumb = ref([""]);
+breadcrumb.value = window.location.pathname.split("/");
 
 const menuOptions = [
   {
